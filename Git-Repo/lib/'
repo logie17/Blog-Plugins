@@ -1,0 +1,45 @@
+package Plugins::GitRepo;
+use strict;
+use warnings;
+
+use Net::GitHub;
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# STATIC METHODS
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+sub new
+# Purpose: Constructor
+# Input:   Ref/String of class
+#          Hash of parameters
+# Output:  Ref to instance
+{
+    my ( $class, %params) = @_;
+
+    my $self = bless {}, ref($class) || $class;
+
+    $self->_init(\%params);
+
+    return $self;
+}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# PRIVATE METHODS 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+sub _init
+# Purpose: Initializes object state
+# Input:   Ref to self
+#          Hash ref of parameters
+# Output:  Ref to to self
+{
+    my ($self, $params_hr) = @_;
+
+    $self->{github_obj} = Net::GitHub->new(repo => 'LogansBlog');
+
+    use Data::Dumper;
+    print Dumper($self->{github_obj}->repos->show);
+    return $self;
+}
+
+1;
